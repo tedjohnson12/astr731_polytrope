@@ -30,20 +30,15 @@ import numpy as np
 from typing import Callable
 
 from polysolver import runge_kutta
+from polysolver import derivatives
 
-
-def yprime(x,y,z):
-    return z
-def get_zprime(n)->Callable:
-    def zprime(x,y,z):
-        return -y**n - 2/x*z
-    return zprime
 
 def solve(x_init,n,h,max_iter=1000):
     x_prev = x_init
     y_prev = 1
     z_prev = 0
-    zprime = get_zprime(n)
+    yprime = derivatives.get_yprime()
+    zprime = derivatives.get_zprime(n)
     n_iter = 0
     xs = []
     ys = []
