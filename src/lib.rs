@@ -2,21 +2,21 @@ mod runge_kutta;
 mod derivatives;
 mod solve_poly;
 
-use pyo3::PyNativeType;
 use pyo3::prelude::*;
 use pyo3::Python;
 use pyo3::types::PyList as PyO3List;
 // use std::marker::Tuple;
 
-/// Formats the sum of two numbers as string.
-#[pyfunction]
-fn sum_as_string(a: usize, b: usize) -> PyResult<String> {
-    Ok((a + b).to_string())
-}
+// /// Formats the sum of two numbers as string.
+// #[pyfunction]
+// fn sum_as_string(a: usize, b: usize) -> PyResult<String> {
+//     Ok((a + b).to_string())
+// }
 
 
 #[pyfunction]
 fn solve(
+    py: Python,
     x_init:f64,
     n:usize,
     h:f64,
@@ -25,7 +25,14 @@ fn solve(
     let (xs, ys): (Vec<f64>, Vec<f64>) = solve_poly::solve(x_init, n, h, max_iter);
     let x_list = PyO3List::new(py, xs);
     let y_list = PyO3List::new(py, ys);
-    PyResult::Ok((*x_list.into_py(py), *y_list.into_py(py)))
+    let result: PyResult<(Py<PyO3List>,Py<PyO3List>)> = 
+        PyResult::Ok(
+            (
+                x_list.into_py(py),
+                y_list.into_py(py)
+            )
+        );
+    result
 }
 
 
