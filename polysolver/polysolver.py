@@ -25,15 +25,28 @@ We are left with:
 We will use a fourth-order Runge-Kutta method.
 
 """
-
+from typing import Tuple
 import numpy as np
-from typing import Callable
 
 from polysolver import runge_kutta
 from polysolver import derivatives
 
 
-def solve(x_init,n,h,max_iter=1000):
+def solve(x_init,n,h,max_iter=1000)->Tuple[np.ndarray,np.ndarray]:
+    """
+    Solve the Lane-Emden equation using a fourth-order Runge-Kutta method.
+    
+    Parameters
+    ----------
+    x_init : float
+        The initial x value.
+    n : int
+        The index of the polytrope.
+    h : float
+        The step size.
+    max_iter : int, optional
+        The maximum number of iterations. The default is 1000.
+    """
     x_prev = x_init
     y_prev = 1
     z_prev = 0
@@ -56,5 +69,4 @@ def solve(x_init,n,h,max_iter=1000):
         )
         x_prev, y_prev, z_prev = x_next, y_next, z_next
     return np.array(xs), np.array(ys)
-    
     
