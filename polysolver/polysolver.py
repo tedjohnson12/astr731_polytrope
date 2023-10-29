@@ -55,10 +55,12 @@ def solve_python(x_init,n,h,max_iter=1000)->Tuple[List,List]:
     n_iter = 0
     xs = []
     ys = []
+    zs = []
     while y_prev > 0 and n_iter < max_iter:
         n_iter += 1
         xs.append(x_prev)
         ys.append(y_prev)
+        zs.append(z_prev)
         x_next, y_next, z_next = runge_kutta.get_next_xyz(
             yprime,
             zprime,
@@ -68,7 +70,7 @@ def solve_python(x_init,n,h,max_iter=1000)->Tuple[List,List]:
             h
         )
         x_prev, y_prev, z_prev = x_next, y_next, z_next
-    return xs, ys
+    return xs, ys, zs
 
 
 def solve_rust(

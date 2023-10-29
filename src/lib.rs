@@ -21,15 +21,17 @@ fn solve(
     n:f64,
     h:f64,
     max_iter:u32
-) -> PyResult<(Py<PyO3List>,Py<PyO3List>)> {
-    let (xs, ys): (Vec<f64>, Vec<f64>) = solve_poly::solve(x_init, n, h, max_iter);
+) -> PyResult<(Py<PyO3List>,Py<PyO3List>,Py<PyO3List>)> {
+    let (xs, ys, zs): (Vec<f64>, Vec<f64>, Vec<f64>) = solve_poly::solve(x_init, n, h, max_iter);
     let x_list = PyO3List::new(py, xs);
     let y_list = PyO3List::new(py, ys);
-    let result: PyResult<(Py<PyO3List>,Py<PyO3List>)> = 
+    let z_list = PyO3List::new(py, zs);
+    let result: PyResult<(Py<PyO3List>,Py<PyO3List>,Py<PyO3List>)> = 
         PyResult::Ok(
             (
                 x_list.into_py(py),
-                y_list.into_py(py)
+                y_list.into_py(py),
+                z_list.into_py(py)
             )
         );
     result
