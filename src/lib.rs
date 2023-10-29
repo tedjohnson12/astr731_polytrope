@@ -39,7 +39,7 @@ fn solve(
 
 /// A Python module implemented in Rust.
 #[pymodule]
-fn polysove_rust(_py: Python, m: &PyModule) -> PyResult<()> {
+fn polysolver_rust(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(solve, m)?)?;
     Ok(())
 }

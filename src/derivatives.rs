@@ -1,7 +1,7 @@
 //// Implement derivatives for the Lane-Emden equation
 
 pub fn get_yprime() -> &'static dyn Fn(f64,f64,f64)->f64 {
-    fn yprime(x:f64, y:f64, z:f64) -> f64 {
+    fn yprime(_x:f64, _y:f64, z:f64) -> f64 {
         z
     }
     &yprime

@@ -25,14 +25,14 @@ We are left with:
 We will use a fourth-order Runge-Kutta method.
 
 """
-from typing import Tuple
+from typing import Tuple, List
 import numpy as np
 
 from polysolver import runge_kutta
 from polysolver import derivatives
 
 
-def solve(x_init,n,h,max_iter=1000)->Tuple[np.ndarray,np.ndarray]:
+def solve_python(x_init,n,h,max_iter=1000)->Tuple[List,List]:
     """
     Solve the Lane-Emden equation using a fourth-order Runge-Kutta method.
     
@@ -68,5 +68,14 @@ def solve(x_init,n,h,max_iter=1000)->Tuple[np.ndarray,np.ndarray]:
             h
         )
         x_prev, y_prev, z_prev = x_next, y_next, z_next
-    return np.array(xs), np.array(ys)
-    
+    return xs, ys
+
+
+def solve_rust(
+    x_init:float,
+    n:int,
+    h:float,
+    max_iter:int=1000
+):
+    import polysolver_rust
+    return polysolver_rust.solve(x_init,n,h,max_iter)

@@ -87,7 +87,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polysolve_rust"
+name = "polysolver_rust"
 version = "0.1.0"
 dependencies = [
  "pyo3",
