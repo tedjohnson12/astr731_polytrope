@@ -1,4 +1,6 @@
 """
 Polysolver
 """
-from .polysolver import solve
+# from . import polysolver_rust
+
+from .polysolver import solve_python, solve_rust
