@@ -42,7 +42,7 @@ mod tests {
     use super::*;
     #[test]
     fn test_n0() {
-        let (xs, ys) = solve(1e-3, 0, 0.01, 1000);
+        let (xs, ys) = solve(1e-3, 0.0, 0.01, 1000);
         assert!(xs.len() == ys.len());
     }
 }
