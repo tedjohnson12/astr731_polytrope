@@ -77,5 +77,5 @@ def solve_rust(
     h:float,
     max_iter:int=1000
 ):
-    import polysolver_rust
+    from polysolver import polysolver_rust
     return polysolver_rust.solve(x_init,n,h,max_iter)
