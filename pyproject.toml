@@ -4,13 +4,24 @@ build-backend = "maturin"
 
 [project]
 name = "polysolver"
+authors = [
+    {name = "Ted Johnson", email = "ted.johnson@unlv.edu"},
+]
+description = "Solve the Lane-Emden equation to produce polytropes. Implemented in native python and rust."
+readme = "docs/readme.rst"
+
 version = "0.2.0"
 requires-python = ">=3.8"
+license = {text = "MIT"}
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
+dependencies = [
+    "matplotlib",
+]
+
 dynamic = ["version"]
 
 [tool.maturin]
