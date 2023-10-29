@@ -10,7 +10,7 @@ if __name__ in '__main__':
     fig,ax = plt.subplots(1,2,figsize=(10,5))
     langs = ['Python','Rust']
     for i, solve in enumerate([polysolver.solve_python, polysolver.solve_rust]):
-        n = 4
+        n = 1.5
         x_init = 1e-6
         step_size = 1e-6
         start_time = datetime.now()

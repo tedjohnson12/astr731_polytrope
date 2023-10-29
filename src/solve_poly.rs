@@ -6,7 +6,7 @@ use crate::derivatives;
 
 pub fn solve(
     x_init: f64,
-    n: usize,
+    n: f64,
     h: f64,
     max_iter: u32
 ) -> (Vec<f64>,Vec<f64>) {

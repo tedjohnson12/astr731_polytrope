@@ -18,7 +18,7 @@ use pyo3::types::PyList as PyO3List;
 fn solve(
     py: Python,
     x_init:f64,
-    n:usize,
+    n:f64,
     h:f64,
     max_iter:u32
 ) -> PyResult<(Py<PyO3List>,Py<PyO3List>)> {
