@@ -75,9 +75,24 @@ def solve_python(x_init,n,h,max_iter=1000)->Tuple[List,List]:
 
 def solve_rust(
     x_init:float,
-    n:int,
+    n:float,
     h:float,
     max_iter:int=1000
 ):
+    """
+    Solve the Lane-Emden equation using a fourth-order Runge-Kutta method.
+    Implemented in rust.
+    
+    Parameters
+    ----------
+    x_init : float
+        The initial x value.
+    n : float
+        The index of the polytrope.
+    h : float
+        The step size.
+    max_iter : int, optional
+        The maximum number of iterations. The default is 1000.
+    """
     from polysolver import polysolver_rust
     return polysolver_rust.solve(x_init,n,h,max_iter)
