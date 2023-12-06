@@ -98,3 +98,42 @@ def solve_rust(
     from polysolver import polysolver_rust
     x,y,z = polysolver_rust.solve(x_init,n,h,max_iter)
     return np.array(x), np.array(y), np.array(z)
+
+def solve(
+    x_init:float,
+    n:float,
+    h:float,
+    max_iter:int=1000,
+    impl:str='rust'
+):
+    """
+    Solve the Lane-Emden equation using a fourth-order Runge-Kutta method.
+    
+    Parameters
+    ----------
+    x_init : float
+        The initial x value. Choose something small.
+    n : float
+        The index of the polytrope.
+    h : float
+        The step size. This should be less than the pressure scale height.
+    max_iter : int, optional
+        The maximum number of iterations. The default is 1000.
+    impl : str, optional
+        The implementation to use. The default is 'rust'.
+    
+    Returns
+    -------
+    x : np.ndarray
+        The x values. Recall that :math:`x=\\xi`.
+    y : np.ndarray
+        The y values. Recall that :math:`y=\\theta_n`.
+    z : np.ndarray
+        The z values. Recall that :math:`z=\\frac{d\\theta_n}{d\\xi}`.
+    """
+    if impl == 'rust':
+        return solve_rust(x_init,n,h,max_iter)
+    if impl == 'python':
+        return solve_python(x_init,n,h,max_iter)
+    else:
+        raise NotImplementedError('impl must be "rust" or "python"')
