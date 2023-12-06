@@ -4,15 +4,11 @@ Polytrope Solver for my ASTR 731 Numerical Assignment
 Solve a polytrope with :math:`n` between 0 and 4
 using the shooting method.
 
-There are (much) better stellar models out there, so this is really just for me.
+This has become a bit of a Frankenrepo.
 
-Installation
-------------
+It has
+#. A Python package
+#. A Rust crate
+#. A showyourwork article
 
-To install this (or your copy) locally, first clone the repository.
-Then navigate to the directory containting ``setup.py`` and 
-type
-
-    pip install -e .
-
-This will install the package locally in development mode.
+Hopefully they all are nice to each other.
