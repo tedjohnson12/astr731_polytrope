@@ -8,10 +8,10 @@ import polysolver
 
 
 if __name__ in '__main__':
-    n = 0
+    n = 4
     x_init = 0.01
-    step_size = 0.01
-    x, y, z = polysolver.solve_rust(x_init=x_init, n=n, h=step_size, max_iter=1000)
+    step_size = 1e-4
+    x, y, z = polysolver.solve(x_init=x_init, n=n, h=step_size, max_iter=10000)
 
     plt.plot(x, y)
 

@@ -10,7 +10,7 @@ from polysolver import Star
 
 plt.style.use('seaborn-v0_8')
 
-HLO = 0.01
+HLO = 0.001
 HHI = 0.1
 NMODELS = 5
 STEPS = np.logspace(
