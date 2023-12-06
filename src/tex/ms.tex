@@ -15,7 +15,57 @@
 \section{Introduction}
 \label{sec:intro}
 
-This is the numerical assignment.
+We will construct a polytropic model of a stellar interior using
+polytropic index $0\le n \le 4$. Following Section 7.2.2 of
+\citet{textbook}, we cast the Lane-Emden equation into two
+first-order differential equations before numerically solving
+with a fourth-order Runge-Kutta integrator.
+
+The integrator is implemented in native Python in the repository
+linked at the top of the page (see \texttt{polysolver/}). It is
+also re-implemented in Rust (\texttt{rust/}). In addition to
+learning about numerical solvers and polytropes, this project
+allowed me to experiment with Rust-Python bindings and with
+\showyourwork, which makes it possible for this document (and
+all the source code associated with it) to be open source and completely
+reproducible.
+
+%describe sections
+
+\section{Methods}
+\label{sec:methods}
+Most of the work is done by the Python function
+\texttt{polysolver.solve(x_int,n,h,max_iter=1000,impl='rust')->x,y,z}.
+The details of the code's backend can be easily read from
+the source code itself, but it essentially starts with some
+values $x$, $y$, and $z$ and then computes the next value for
+each using a 4th-order Runge-Kutta integrator. It stops when
+the condition $y\le 0$ is met or after \texttt{max_iter} iterations.
+
+These three variables are defined by \citet{textbook} as
+\[ x = \xi\]
+\[y = \theta_n\]
+\[z = \frac{\text{d}theta_n}{\text{d}\xi}\]
+
+\texttt{x_init} is the initial value of $x$ and must be set close to zero.
+However, it cannot be zero because at zero the derivative of $z$ goes to infinity.
+
+\texttt{n} is the polytropic index of the model. We explore
+$0\le n \le 4$.
+
+\texttt{h} is the step size. This is an important parameter that we will
+explore below. Ideally this parameter should be less than
+the pressure scale height at all points.
+
+\texttt{max_iter} and \texttt{impl} are optional parameters that do not
+effect the mathematics of the model. \texttt{max_iter} prevents
+an infinite loop, and should be set high enough that the
+condition $y\le 0$ is met. \texttt{impl} is the solver
+implementation that will be used. The code has been implemented
+in both Python and Rust.
+
+
+\section{Resolution Study}
 
 
 
