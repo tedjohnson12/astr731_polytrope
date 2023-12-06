@@ -1,7 +1,7 @@
 % Define document class
 \documentclass[twocolumn]{aastex631}
 \usepackage{showyourwork}
-
+\usepackage{listings}
 % Begin!
 \begin{document}
 
@@ -35,7 +35,13 @@ reproducible.
 \section{Methods}
 \label{sec:methods}
 Most of the work is done by the Python function
-\verb|polysolver.solve(x_int,n,h,max_iter=1000,impl='rust')->x,y,z|.
+\begin{lstlisting}[language=Python]
+    polysolver.solve(
+        x_int,n,h,
+        max_iter=1000,impl='rust'
+    )->x,y,z
+\end{lstlisting}
+
 The details of the code's backend can be easily read from
 the source code itself, but it essentially starts with some
 values $x$, $y$, and $z$ and then computes the next value for
@@ -45,7 +51,7 @@ the condition $y \le 0$ is met or after \texttt{max\_iter} iterations.
 These three variables are defined by \citet{textbook} as
 \[ x = \xi\]
 \[y = \theta_n\]
-\[z = \frac{\text{d}theta_n}{\text{d}\xi}\]
+\[z = \frac{\text{d}\theta_n}{\text{d}\xi}\]
 
 \texttt{x\_init} is the initial value of $x$ and must be set close to zero.
 However, it cannot be zero because at zero the derivative of $z$ goes to infinity.
