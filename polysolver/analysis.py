@@ -110,7 +110,7 @@ def theta_prime_xi1(z):
     """
     Get :math:`-\\frac{d\\theta_n}{d\\xi}(\\xi_1)`.
     """
-    return z[-1]
+    return -z[-1]
 
 def central_over_mean_density(x,y,n):
     """

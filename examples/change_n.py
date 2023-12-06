@@ -2,7 +2,7 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
-from polysolver import solve_rust as solve
+from polysolver import solve
 from polysolver.analysis import central_over_mean_density, xi_1, theta_prime_xi1
 
 

@@ -24,16 +24,16 @@ N = 0
 MAX_ITER = 1000000
 IMPL = 'rust'
 
-FILENAME = 'res_xi1.pdf'
+FILENAME = 'res_thetaprime.pdf'
 PATH = paths.figures / FILENAME
 
 data = [
-    (0., np.sqrt(6)),
-    (1.0, np.pi),
-    (1.5, 3.6538),
-    (2.0, 4.3529),
-    (3.0, 6.8969),
-    (4.0, 14.972)
+    (0., np.sqrt(6)/3),
+    (1.0, 1/np.pi),
+    (1.5, 0.20330),
+    (2.0, 0.12725),
+    (3.0, 0.04243),
+    (4.0, 0.00802)
 ]
 
 
@@ -43,7 +43,7 @@ fig.subplots_adjust(right=0.95,top=0.95)
 
 colors = plt.cm.viridis(np.linspace(0,1,len(data)))
 
-for (n, xi1), c in zip(data, colors):
+for (n, theta_p), c in zip(data, colors):
     dat = []
     for h in STEPS:
         star = Star.from_soln(
@@ -53,16 +53,16 @@ for (n, xi1), c in zip(data, colors):
             max_iter=MAX_ITER,
             impl=IMPL
         )
-        xi1_measured = star.xi1
-        dat.append(xi1_measured)
+        theta_p_measured = star.theta_prime
+        dat.append(theta_p_measured)
     dat = np.array(dat)
-    res = np.abs(xi1 - dat)/xi1
+    res = np.abs(dat-theta_p)/theta_p
     ax.plot(STEPS, res, c=c,label=f'n={n:.1f}')
         
 
 ax.set_xlabel('$h$')
 ax.set_xscale('log')
-ax.set_ylabel('$\\Delta \\xi_1$')
+ax.set_ylabel('$\\Delta \\theta_n^\\prime$$')
 ax.set_yscale('log')
 ax.legend()
 
