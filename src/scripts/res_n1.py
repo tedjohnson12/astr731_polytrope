@@ -27,7 +27,7 @@ FILENAME = 'res_n1.pdf'
 PATH = paths.figures / FILENAME
 
 
-fig, ax = plt.subplots(2,1,sharex=True,height_ratios=[5,2])
+fig, ax = plt.subplots(2,1,sharex=True,height_ratios=[5,2],figsize=(5.5,4))
 fig.subplots_adjust(hspace=0.05,right=0.95,top=0.95)
 
 colors = plt.cm.viridis(np.linspace(0,1,NMODELS))
