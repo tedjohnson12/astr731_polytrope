@@ -39,10 +39,6 @@ def norm_mass(x:np.ndarray,y:np.ndarray,n:float):
     return mass_over_rho_c
 def volume(x:np.ndarray):
     return 4/3 *np.pi * xi_1(x)**3
-    # r = x
-    # dv = 4 * np.pi * r**2
-    # vol = np.trapz(dv,x)
-    # return vol
     
 def xi_1(x):
     return x[-1]
