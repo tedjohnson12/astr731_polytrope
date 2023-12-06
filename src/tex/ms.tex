@@ -66,6 +66,34 @@ in both Python and Rust.
 
 
 \section{Resolution Study}
+\label{sec:res}
+
+We examine the effect of step size on our solutions.
+
+\begin{figure}
+    \script{res_n0.py}
+    \begin{centering}
+        \includegraphics{res_n0.pdf}
+        \caption{Polytropic curve for $n=0$ for various
+        values of $h$. An analytic solution is used as
+        the ground truth. Note that the residuals are highest
+        at the boundaries.}
+    \end{centering}
+\end{figure}
+
+\begin{figure}
+    \script{res_n1.py}
+    \begin{centering}
+        \includegraphics{res_n1.pdf}
+        \caption{Polytropic curve for $n=1$ for various
+        values of $h$. An analytic solution is used as
+        the ground truth. Note that the residuals less than 0
+        at the core and greater than zero at the surface. This
+        is due to an inflection point at $\xi=\pi/2$.}
+    \end{centering}
+\end{figure}
+
+
 
 
 
