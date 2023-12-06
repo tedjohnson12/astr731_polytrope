@@ -231,7 +231,7 @@ class Star:
             warnings.warn(f'Analytic solution only valid for x>{xmin:.2f}',RuntimeWarning)
         if np.any(x>xmax):
             warnings.warn(f'Analytic solution only valid for x<={xmax:.2f}',RuntimeWarning)
-        x = np.where((x<xmin)|(x>xmax),x,np.nan)
+        x = np.where((x<xmin)|(x>xmax),np.nan,x)
         y = 1 - x**2/6
         z = -x/3
         return cls(x,y,z,0)
@@ -269,7 +269,7 @@ class Star:
             warnings.warn(f'Analytic solution only valid for x>{xmin:.2f}',RuntimeWarning)
         if np.any(x>xmax):
             warnings.warn(f'Analytic solution only valid for x<={xmax:.2f}',RuntimeWarning)
-        x = np.where((x<xmin)|(x>xmax),x,np.nan)
+        x = np.where((x<xmin)|(x>xmax),np.nan,x)
         y = np.sinc(x/np.pi)
         z = np.where(x==0,0,(np.cos(x)-np.sinc(x/np.pi))/x)
         return cls(x,y,z,1)
