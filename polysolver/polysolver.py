@@ -70,7 +70,7 @@ def solve_python(x_init,n,h,max_iter=1000)->Tuple[List,List]:
             h
         )
         x_prev, y_prev, z_prev = x_next, y_next, z_next
-    return xs, ys, zs
+    return np.array(xs), np.array(ys), np.array(zs)
 
 
 def solve_rust(
@@ -94,5 +94,7 @@ def solve_rust(
     max_iter : int, optional
         The maximum number of iterations. The default is 1000.
     """
+    # pylint: disable-next=no-name-in-module
     from polysolver import polysolver_rust
-    return polysolver_rust.solve(x_init,n,h,max_iter)
+    x,y,z = polysolver_rust.solve(x_init,n,h,max_iter)
+    return np.array(x), np.array(y), np.array(z)
