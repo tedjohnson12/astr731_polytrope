@@ -53,6 +53,9 @@ These three variables are defined by \citet{textbook} as
 \[y = \theta_n\]
 \[z = \frac{\text{d}\theta_n}{\text{d}\xi}\]
 
+We also define $\xi_1$ as the value of $\xi$ when $\theta_n$ is
+zero (i.e. the surface).
+
 \texttt{x\_init} is the initial value of $x$ and must be set close to zero.
 However, it cannot be zero because at zero the derivative of $z$ goes to infinity.
 
@@ -74,7 +77,25 @@ in both Python and Rust.
 \section{Resolution Study}
 \label{sec:res}
 
-We examine the effect of step size on our solutions.
+The step size parameter $h$ determines the resolution of our integration
+in units of $\xi$. A more sophisticated algorithm might choose a variable
+step size to improve accuracy, but we hold this parameter constant
+for each integration.
+
+A major flaw in our choice of constant $h$ is that the likelyhood that
+the program terminates when $\theta_n=0$ is very small. Except when $h$
+and \texttt{x\_init} are chosen very carefully, $\xi_1$ will end up
+between grid points -- producing additional error for the value
+of our solution at the surface.
+
+A possible mitigation of this effect is to capture one additional point
+$\xi>\xi_1$ and use linear interpolation to determine the surface value,
+but this is only possible for integer $n$. The reason for this comes from
+our definition of $z'$
+\[
+    z' = -y^n - \frac{2}{x}z
+\]
+The first term $-y^n$ is only real if $y\ge0$ or $n \in \mathbb{Z}$
 
 \begin{figure}
     \script{res_n0.py}
