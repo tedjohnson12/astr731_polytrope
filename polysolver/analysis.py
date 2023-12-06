@@ -300,3 +300,22 @@ class Star:
             return cls._one(x)
         else:
             raise NotImplementedError(f'There is no analytic solution for n={n:d}')
+    @property
+    def xi1(self)->float:
+        """
+        Get the value of :math:`\\xi` at the surface.
+        """
+        return xi_1(self.x)
+    @property
+    def theta_prime(self)->float:
+        """
+        Get :math:`-\\frac{d\\theta_n}{d\\xi}` at the surface.
+        """
+        return theta_prime_xi1(self.z)
+    @property
+    def rho_c_over_rho(self)->float:
+        """
+        Get the central density divided by the
+        mean density.
+        """
+        return central_over_mean_density(self.x,self.y,self.n)
