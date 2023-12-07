@@ -102,8 +102,8 @@ To mitigate this effect we can modify our equation for $z'$
 \[
     z' =
     \begin{cases}
-        -y^n - \frac{2}{x}z & \text{if} y\ge0 \\
-        (-y)^n - \frac{2}{x}z & \text{if} y<0
+        -y^n - \frac{2}{x}z & \text{if}~y\ge0 \\
+        (-y)^n - \frac{2}{x}z & \text{if}~y<0
     \end{cases}
 \]
 This way $z'$ is continuous and real as $y$ crosses zero. We then
@@ -124,11 +124,11 @@ the surface can be shown most accuratly.
 \begin{figure}[h]
     \script{res_n0.py}
     \begin{centering}
-        \includegraphics[width=0.5\textwidth]{figures/res_n0.pdf}
+        \includegraphics[width=0.45\textwidth]{figures/res_n0.pdf}
         \caption{Polytropic curve for $n=0$ for various
         values of $h$. An analytic solution is used as
         the ground truth. Note that the residuals are highest
-        at the boundaries.}
+        near the boundaries.}
         \label{fig:res_n0}
     \end{centering}
 \end{figure}
@@ -136,7 +136,7 @@ the surface can be shown most accuratly.
 \begin{figure}[h]
     \script{res_n1.py}
     \begin{centering}
-        \includegraphics[width=0.5\textwidth]{figures/res_n1.pdf}
+        \includegraphics[width=0.45\textwidth]{figures/res_n1.pdf}
         \caption{Polytropic curve for $n=1$ for various
         values of $h$. An analytic solution is used as
         the ground truth. Note the local minimum at
@@ -169,7 +169,7 @@ into a few regimes:
 \begin{figure}[h]
     \script{res_xi1.py}
     \begin{centering}
-        \includegraphics[width=0.5\textwidth]{figures/res_xi1.pdf}
+        \includegraphics[width=0.45\textwidth]{figures/res_xi1.pdf}
         \caption{Deviations of $\xi_1$ from the true value as a
         function of $h$. Polytropes without analytic solutions
         quickly converge as $h$ approaches zero, while the
@@ -186,7 +186,7 @@ into a few regimes:
 \begin{figure}[h]
     \script{res_theta_prime.py}
     \begin{centering}
-        \includegraphics[width=0.5\textwidth]{figures/res_thetaprime.pdf}
+        \includegraphics[width=0.45\textwidth]{figures/res_thetaprime.pdf}
         \caption{Same as Figure \ref{fig:res_xi1}, but for
         $\theta_n'(\xi_1)$.}
         \label{fig:res_thetaprime}
@@ -196,7 +196,7 @@ into a few regimes:
 \begin{figure}[h]
     \script{res_rho.py}
     \begin{centering}
-        \includegraphics[width=0.5\textwidth]{figures/res_rho.pdf}
+        \includegraphics[width=0.45\textwidth]{figures/res_rho.pdf}
         \caption{Same as Figure \ref{fig:res_xi1}, but for
         $\rho_c/<\rho>$.}
         \label{fig:res_rho}
