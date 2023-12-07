@@ -10,7 +10,7 @@ from polysolver import Star
 
 plt.style.use('seaborn-v0_8')
 
-HLO = 0.001
+HLO = 0.01
 HHI = 0.1
 NMODELS = 5
 STEPS = np.logspace(
@@ -18,10 +18,11 @@ STEPS = np.logspace(
     np.log10(HHI),
     NMODELS
 )
-X_INIT = 0.1*HLO
+X_INIT = 1e-20
 N = 0
 MAX_ITER = 10000
 IMPL = 'rust'
+NPOINTS_RESAMPLE = 100
 
 FILENAME = 'res_n0.pdf'
 PATH = paths.figures / FILENAME
@@ -41,18 +42,22 @@ for h, c in zip(STEPS, colors):
         max_iter=MAX_ITER,
         impl=IMPL
     )
+    xi1 = star.xi1
+    xnew = np.linspace(X_INIT,xi1,NPOINTS_RESAMPLE)
+    ynew = star.resample_y(xnew)
     true = Star.analytic(
-        x=star.x,
+        x=xnew,
         n=N
     )
-    res = (star.y - true.y)/true.y*100
+    res = np.abs(ynew - true.y)
     
-    ax[0].plot(star.x,star.y,label=f'{h:.2f}',c=c)
-    ax[1].plot(star.x,res,c=c)
+    ax[0].plot(xnew,ynew,label=f'{h:.2f}',c=c)
+    ax[1].plot(xnew,res,c=c)
 
 ax[1].set_xlabel('$\\xi$')
 ax[0].set_ylabel('$\\theta_0$')
-ax[1].set_ylabel('Residual (%)')
+ax[1].set_ylabel('$|\\theta_0 - \\theta_{0,\\mathrm{true}}|$')
+ax[1].set_yscale('log')
 ax[0].legend()
 
 fig.savefig(PATH)

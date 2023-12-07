@@ -15,6 +15,10 @@ pub fn get_yprime() -> &'static dyn Fn(f64,f64,f64)->f64 {
 // }
 pub fn get_zprime(n: f64) -> Box<dyn Fn(f64, f64, f64) -> f64> {
     Box::new(move |x, y, z| {
-        -1.0 * y.powf(n) - 2.0 / x * z
+        if y >= 0.0 {
+            return -1.0 * y.powf(n) - 2.0 / x * z;
+        }
+        return (-1.0 * y).powf(n) - 2.0 / x * z
+        
     })
 }

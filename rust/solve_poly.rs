@@ -19,11 +19,12 @@ pub fn solve(
     let mut xs: Vec<f64> = Vec::new();
     let mut ys: Vec<f64> = Vec::new();
     let mut zs: Vec<f64> = Vec::new();
+    xs.push(x_prev);
+    ys.push(y_prev);
+    zs.push(z_prev);
     while (y_prev > 0.0) && (n_iter < max_iter) {
         n_iter += 1;
-        xs.push(x_prev);
-        ys.push(y_prev);
-        zs.push(z_prev);
+        
         let (x_next, y_next, z_next) = runge_kutta::get_next_xyz(
             yprime,
             &zprime,
@@ -35,6 +36,9 @@ pub fn solve(
         x_prev = x_next;
         y_prev = y_next;
         z_prev = z_next;
+        xs.push(x_prev);
+        ys.push(y_prev);
+        zs.push(z_prev);
     }
     (xs, ys, zs)
 }

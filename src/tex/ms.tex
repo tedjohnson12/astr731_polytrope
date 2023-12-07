@@ -30,6 +30,15 @@ allowed me to experiment with Rust-Python bindings and with
 all the source code associated with it) to be open source and completely
 reproducible.
 
+Following \citet{textbook} we will focus on the profile $\theta_n(\xi)$
+as well as the location of the surface $\xi_1$, the derivative
+of $\theta_n$ at the surface $\theta_n'(\xi_1)$, and the central
+density in units of the bulk density $\rho_c/<\rho>$.
+
+Section \ref{sec:methods} describes the code and it's outputs,
+Section \ref{sec:res} examines the effects of numerical resolution
+on the results, ...
+
 %describe sections
 
 \section{Methods}
@@ -58,6 +67,7 @@ zero (i.e. the surface).
 
 \texttt{x\_init} is the initial value of $x$ and must be set close to zero.
 However, it cannot be zero because at zero the derivative of $z$ goes to infinity.
+Unless stated otherwise, we set \texttt{x\_init} to $10^{-20}$.
 
 \texttt{n} is the polytropic index of the model. We explore
 $0\le n \le 4$.
@@ -88,16 +98,30 @@ and \texttt{x\_init} are chosen very carefully, $\xi_1$ will end up
 between grid points -- producing additional error for the value
 of our solution at the surface.
 
-A possible mitigation of this effect is to capture one additional point
-$\xi>\xi_1$ and use linear interpolation to determine the surface value,
-but this is only possible for integer $n$. The reason for this comes from
-our definition of $z'$
+To mitigate this effect we can modify our equation for $z'$
 \[
-    z' = -y^n - \frac{2}{x}z
+    z' =
+    \begin{cases}
+        -y^n - \frac{2}{x}z & \text{if} y\ge0 \\
+        (-y)^n - \frac{2}{x}z & \text{if} y<0
+    \end{cases}
 \]
-The first term $-y^n$ is only real if $y\ge0$ or $n \in \mathbb{Z}$
+This way $z'$ is continuous and real as $y$ crosses zero. We then
+record one additional point $\xi>\xi_1$ and use interpolation
+to determine the surface value. We choose a cubic spline interpolation
+of the final three points for a balance between accuracy and
+speed.
 
-\begin{figure}
+Figures \ref{fig:res_n0} and \ref{fig:res_n1} show the
+polytropic curve for $n=0$ and $n=1$ for various
+values of $h$. The curve shown is a resampled solution from
+\texttt{x\_init} to $\xi_{1,\text{measured}}$ using a cubic spline.
+The resampling is done so that the value of $\theta_n$ at
+the surface can be shown most accuratly.
+
+
+
+\begin{figure}[h]
     \script{res_n0.py}
     \begin{centering}
         \includegraphics[width=0.5\textwidth]{figures/res_n0.pdf}
@@ -109,18 +133,76 @@ The first term $-y^n$ is only real if $y\ge0$ or $n \in \mathbb{Z}$
     \end{centering}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \script{res_n1.py}
     \begin{centering}
         \includegraphics[width=0.5\textwidth]{figures/res_n1.pdf}
         \caption{Polytropic curve for $n=1$ for various
         values of $h$. An analytic solution is used as
-        the ground truth. Note that the residuals less than 0
-        at the core and greater than zero at the surface. This
-        is due to an inflection point at $\xi=\pi/2$.}
+        the ground truth. Note the local minimum at
+        $\xi\sim \pi/2$. There is an inflection point here,
+        and our numerical solution crosses the true value.
+        The location of this minimum approaches the inflection
+        point as $h$ approaches zero.}
         \label{fig:res_n1}
     \end{centering}
 \end{figure}
+
+We can also discuss the effects of $h$ on our measured quantities
+$\xi_1$, $\theta_n'(\xi_1)$, and $\rho_c/<\rho>$. \citet{textbook}
+gives values for these quantities for $n=0,1,1.5,2,3,4$ in Table 7.1.
+Deviations of our numerical results from these given quantities fall
+into a few regimes:
+
+\begin{itemize}
+    \item Dominated by interpolation errors. This is our uncertainty
+    due to $h$.
+    \item Dominated by the finite precision of the true value. Once
+    within the precision of the value given by \citet{textbook},
+    improving the resolution no longer yields a better agreement.
+    In the case that an analytic solution is known, 
+    \item Dominated by the value of \texttt{x\_init}. Since we
+    cannot start our integration at $\xi=0$, our numerical solution
+    will converge differently depending on the location of this boundary.
+\end{itemize}
+
+\begin{figure}[h]
+    \script{res_xi1.py}
+    \begin{centering}
+        \includegraphics[width=0.5\textwidth]{figures/res_xi1.pdf}
+        \caption{Deviations of $\xi_1$ from the true value as a
+        function of $h$. Polytropes without analytic solutions
+        quickly converge as $h$ approaches zero, while the
+        $n=0$ and $n=1$ solutions continue to imporove indefinitely.
+        It is expected that these values would eventually
+        be limited by machine precision or \texttt{x\_init}.
+        They y-axis is defined as
+        $\Delta q = \frac{|q-q_{\rm true}|}{q_{\rm true}}$.
+        }
+        \label{fig:res_xi1}
+    \end{centering}
+\end{figure}
+
+\begin{figure}[h]
+    \script{res_theta_prime.py}
+    \begin{centering}
+        \includegraphics[width=0.5\textwidth]{figures/res_thetaprime.pdf}
+        \caption{Same as Figure \ref{fig:res_xi1}, but for
+        $\theta_n'(\xi_1)$.}
+        \label{fig:res_thetaprime}
+    \end{centering}
+\end{figure}
+
+\begin{figure}[h]
+    \script{res_rho.py}
+    \begin{centering}
+        \includegraphics[width=0.5\textwidth]{figures/res_rho.pdf}
+        \caption{Same as Figure \ref{fig:res_xi1}, but for
+        $\rho_c/<\rho>$.}
+        \label{fig:res_rho}
+    \end{centering}
+\end{figure}
+
 
 
 

@@ -4,6 +4,7 @@ Derivates to use in the Runge-Kutta method.
 
 """
 from typing import Callable
+import cmath
 
 
 def get_yprime() -> Callable:
@@ -51,7 +52,11 @@ def get_zprime(n) -> Callable:
     Callable
         The zprime function
     """
-    def zprime(x, y, z):
+    def zprime(
+        x:float,
+        y:float,
+        z:float
+    ):
         """
         :math:`\\frac{dz}{dx}`
 
@@ -69,5 +74,10 @@ def get_zprime(n) -> Callable:
         float
             The zprime value.
         """
-        return -y**n - 2/x*z
+        if isinstance(y, complex):
+            raise RuntimeError('Complex y passed to zprime')
+        a = y**n
+        if isinstance(a, complex):
+            a = -abs(a)
+        return -a - 2/x*z
     return zprime

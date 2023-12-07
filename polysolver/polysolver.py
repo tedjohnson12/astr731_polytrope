@@ -70,6 +70,9 @@ def solve_python(x_init,n,h,max_iter=1000)->Tuple[List,List]:
             h
         )
         x_prev, y_prev, z_prev = x_next, y_next, z_next
+    xs.append(x_prev)
+    ys.append(y_prev)
+    zs.append(z_prev)
     return np.array(xs), np.array(ys), np.array(zs)
 
 

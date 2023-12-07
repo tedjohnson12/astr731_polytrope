@@ -26,6 +26,7 @@ where
 """
 import warnings
 import numpy as np
+from scipy.interpolate import interp1d, CubicSpline
 
 from polysolver import solve
 
@@ -68,13 +69,16 @@ def norm_mass(x:np.ndarray,y:np.ndarray,n:float)->float:
     float
         The mass divided by the central density.
     """
+    xi1 = xi_1(x,y)
+    x = np.append(x[:-1],xi1)
+    y = np.append(y[:-1],0)
     r = x
     dv = 4 * np.pi * r**2
     rho_over_rho_c = get_rho_norm(y,n)
     dm_over_rho_c = dv*rho_over_rho_c
     mass_over_rho_c = np.trapz(dm_over_rho_c,r)
     return mass_over_rho_c
-def volume(x:np.ndarray)->float:
+def volume(x:np.ndarray,y:np.ndarray)->float:
     """
     Get the volume in units of x.
     
@@ -82,15 +86,18 @@ def volume(x:np.ndarray)->float:
     ----------
     x : np.ndarray
         The x values. Recall that :math:`x=\\xi=\\frac{r}{r_n}`
+    y : np.ndarray
+        The y values. Recall that :math:`y=\\theta_n`
+        and :math:`\\rho(r) = \\rho_c \\theta^n(r)`
     
     Returns
     -------
     float
         The volume in units of x.
     """
-    return 4/3 *np.pi * xi_1(x)**3
+    return 4/3 *np.pi * xi_1(x,y)**3
     
-def xi_1(x):
+def xi_1(x,y):
     """
     Get the last value :math:`\\xi_1`.
     
@@ -98,19 +105,30 @@ def xi_1(x):
     ----------
     x : np.ndarray
         The x values. Recall that :math:`x=\\xi=\\frac{r}{r_n}`
+    y : np.ndarray
+        The y values. Recall that :math:`y=\\theta_n`
+        and :math:`\\rho(r) = \\rho_c \\theta^n(r)`
     
     Returns
     -------
     float
         :math:`\\xi_1`.
+    
+    Notes
+    -----
+    We assume here that the last y value is less than 0.
+    Then we use linear interpolation to find the value
+    of x at which y=0.
     """
-    return x[-1]
+    interp = CubicSpline(-y[-3:],x[-3:])
+    return interp(0)
 
-def theta_prime_xi1(z):
+def theta_prime_xi1(z,y):
     """
     Get :math:`-\\frac{d\\theta_n}{d\\xi}(\\xi_1)`.
     """
-    return -z[-1]
+    interp = CubicSpline(-y[-3:],z[-3:])
+    return -interp(0)
 
 def central_over_mean_density(x,y,n):
     """
@@ -139,7 +157,7 @@ def central_over_mean_density(x,y,n):
         
     """
     mass_over_rhoc = norm_mass(x,y,n)
-    vol = volume(x)
+    vol = volume(x,y)
     return vol/mass_over_rhoc
 
 class Star:
@@ -231,7 +249,7 @@ class Star:
             warnings.warn(f'Analytic solution only valid for x>{xmin:.2f}',RuntimeWarning)
         if np.any(x>xmax):
             warnings.warn(f'Analytic solution only valid for x<={xmax:.2f}',RuntimeWarning)
-        x = np.where((x<xmin)|(x>xmax),np.nan,x)
+        # x = np.where((x<xmin)|(x>xmax),np.nan,x)
         y = 1 - x**2/6
         z = -x/3
         return cls(x,y,z,0)
@@ -269,7 +287,7 @@ class Star:
             warnings.warn(f'Analytic solution only valid for x>{xmin:.2f}',RuntimeWarning)
         if np.any(x>xmax):
             warnings.warn(f'Analytic solution only valid for x<={xmax:.2f}',RuntimeWarning)
-        x = np.where((x<xmin)|(x>xmax),np.nan,x)
+        # x = np.where((x<xmin)|(x>xmax),np.nan,x)
         y = np.sinc(x/np.pi)
         z = np.where(x==0,0,(np.cos(x)-np.sinc(x/np.pi))/x)
         return cls(x,y,z,1)
@@ -305,13 +323,13 @@ class Star:
         """
         Get the value of :math:`\\xi` at the surface.
         """
-        return xi_1(self.x)
+        return xi_1(self.x,self.y)
     @property
     def theta_prime(self)->float:
         """
         Get :math:`-\\frac{d\\theta_n}{d\\xi}` at the surface.
         """
-        return theta_prime_xi1(self.z)
+        return theta_prime_xi1(self.z,self.y)
     @property
     def rho_c_over_rho(self)->float:
         """
@@ -319,3 +337,12 @@ class Star:
         mean density.
         """
         return central_over_mean_density(self.x,self.y,self.n)
+    def resample_y(
+        self,
+        x:np.ndarray
+    ):
+        """
+        Resample the y values.
+        """
+        interp = CubicSpline(self.x,self.y)
+        return interp(x)

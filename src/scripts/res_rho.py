@@ -19,7 +19,7 @@ STEPS = np.logspace(
     np.log10(HHI),
     NMODELS
 )
-X_INIT = 1e-8
+X_INIT = 1e-20
 N = 0
 MAX_ITER = 1000000
 IMPL = 'rust'

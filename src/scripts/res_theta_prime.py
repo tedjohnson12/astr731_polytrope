@@ -19,7 +19,7 @@ STEPS = np.logspace(
     np.log10(HHI),
     NMODELS
 )
-X_INIT = 1e-8
+X_INIT = 1e-10
 N = 0
 MAX_ITER = 1000000
 IMPL = 'rust'
@@ -62,7 +62,7 @@ for (n, theta_p), c in zip(data, colors):
 
 ax.set_xlabel('$h$')
 ax.set_xscale('log')
-ax.set_ylabel('$\\Delta \\theta_n^\\prime$$')
+ax.set_ylabel('$\\Delta \\theta_n^\\prime$')
 ax.set_yscale('log')
 ax.legend()
 
