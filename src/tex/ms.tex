@@ -154,17 +154,30 @@ gives values for these quantities for $n=0,1,1.5,2,3,4$ in Table 7.1.
 Deviations of our numerical results from these given quantities fall
 into a few regimes:
 
-\begin{itemize}
+\begin{enumerate}
     \item Dominated by interpolation errors. This is our uncertainty
-    due to $h$.
+    due to $h$. \label{it:interp}
     \item Dominated by the finite precision of the true value. Once
     within the precision of the value given by \citet{textbook},
     improving the resolution no longer yields a better agreement.
-    In the case that an analytic solution is known, 
+    \label{it:prec}
     \item Dominated by the value of \texttt{x\_init}. Since we
     cannot start our integration at $\xi=0$, our numerical solution
     will converge differently depending on the location of this boundary.
-\end{itemize}
+    \label{it:init}
+\end{enumerate}
+
+We expect Regime \ref{it:interp} to be the main source of error for
+large $h$. Figures \ref{fig:res_xi1}, \ref{fig:res_thetaprime},
+and \ref{fig:res_rho} show that at large $h$ the residuals
+are indeed a function of $h$, but for the case of general $n$ our
+model converges when $h$ is sufficiently small. The fact that we
+do not see convergence for $n=0$ and $n=1$ suggests that the convergence
+of residuals in the general case is due completely to finite knowledge
+of the true value (i.e. Regime \ref{it:prec}). If it were the case of
+Regime \ref{it:init} then the solutions that are known analytically
+would also converge to some near-true value and we would see the same behavior
+for all $n$.
 
 \begin{figure}[h]
     \script{res_xi1.py}
@@ -204,6 +217,52 @@ into a few regimes:
     \end{centering}
 \end{figure}
 
+Herein we choose a value of $h = 10^{-3}$ based on Figures \ref{fig:res_xi1},
+\ref{fig:res_thetaprime}, and \ref{fig:res_rho}.
+
+\subsection{The effects of \texttt{x\_init}}
+\label{subsec:init}
+Let us quickly examine the effects of our lower boundary on our
+numerical results. Figure \ref{fig:xinit_xi1} shows the
+deviations of $\xi_1$ similar to Figure \ref{fig:res_xi1},
+but in this case our independent variable is \texttt{x\_init}.
+For every solution there is a value of \texttt{x\_init}
+after which there is no improved accuracy. This value appears to be
+$~10^{-3}$, but that is also the value we set for $h$.
+
+Figure \ref{fig:xinit_res_xi1} examines the joint effects of 
+\texttt{x\_init} and $h$. We do find that for $n=0$ and $n=1$
+\texttt{x\_init} should be at a maximum $h$, but for general $n$
+we become dominated by Regime \ref{it:prec} when \texttt{x\_init}
+is less than $\sim 10^{-2}$. However, unlike $h$, we can choose arbitrarily
+small \texttt{x\_init} without sacrificing computational
+resources, so we will continue with the value $10^{-20}$.
+
+\begin{figure}[h]
+    \script{xinit_xi1.py}
+    \begin{centering}
+        \includegraphics[width=0.45\textwidth]{figures/xinit_xi1.pdf}
+        \caption{Deviations of $\xi_1$ from the true value as a
+        function of \texttt{x\_init}. As expected, when \texttt{x\_init}
+        is large $\Delta \xi_1$ is a function of \texttt{x\_init},
+        and the error is independent of \texttt{x\_init} when it is small.
+        This relationship holds for arbitrary $n$, confirming that
+        for small $h$ and small \texttt{x\_init} the numerical
+        error we measure is dominated by the true value's uncertainty.}
+        \label{fig:xinit_xi1}
+    \end{centering}
+\end{figure}
+
+\begin{figure*}[h]
+    \script{xinit_res_xi1.py}
+    \begin{centering}
+        \includegraphics[width=0.9\textwidth]{figures/xinit_res_xi1.pdf}
+        \caption{Deviations of $\xi_1$ from the true value as a function
+        of both \texttt{x\_init} and $h$. The dashed line
+        marks the curve \texttt{x\_init}$=h$.}
+        \label{fig:xinit_res_xi1}
+    \end{centering}
+\end{figure*}
 
 
 
