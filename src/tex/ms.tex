@@ -89,6 +89,71 @@ in both Python and Rust.
 \section{Resolution Study}
 \label{sec:res}
 
+\begin{figure}
+    \script{res_n0.py}
+    \begin{centering}
+        \includegraphics[width=0.45\textwidth]{figures/res_n0.pdf}
+        \caption{Polytropic curve for $n=0$ for various
+        values of $h$. An analytic solution is used as
+        the ground truth. Note that the residuals are highest
+        near the boundaries.}
+        \label{fig:res_n0}
+    \end{centering}
+\end{figure}
+
+\begin{figure}
+    \script{res_n1.py}
+    \begin{centering}
+        \includegraphics[width=0.45\textwidth]{figures/res_n1.pdf}
+        \caption{Polytropic curve for $n=1$ for various
+        values of $h$. An analytic solution is used as
+        the ground truth. Note the local minimum at
+        $\xi\sim \pi/2$. There is an inflection point here,
+        and our numerical solution crosses the true value.
+        The location of this minimum approaches the inflection
+        point as $h$ approaches zero.}
+        \label{fig:res_n1}
+    \end{centering}
+\end{figure}
+
+\begin{figure}
+    \script{res_xi1.py}
+    \begin{centering}
+        \includegraphics[width=0.45\textwidth]{figures/res_xi1.pdf}
+        \caption{Deviations of $\xi_1$ from the true value as a
+        function of $h$. Polytropes without analytic solutions
+        quickly converge as $h$ approaches zero, while the
+        $n=0$ and $n=1$ solutions continue to imporove indefinitely.
+        It is expected that these values would eventually
+        be limited by machine precision or \texttt{x\_init}.
+        They y-axis is defined as
+        $\Delta q = \frac{|q-q_{\rm true}|}{q_{\rm true}}$.
+        }
+        \label{fig:res_xi1}
+    \end{centering}
+\end{figure}
+
+\begin{figure}
+    \script{res_theta_prime.py}
+    \begin{centering}
+        \includegraphics[width=0.45\textwidth]{figures/res_thetaprime.pdf}
+        \caption{Same as Figure \ref{fig:res_xi1}, but for
+        $\theta_n'(\xi_1)$.}
+        \label{fig:res_thetaprime}
+    \end{centering}
+\end{figure}
+
+\begin{figure}
+    \script{res_rho.py}
+    \begin{centering}
+        \includegraphics[width=0.45\textwidth]{figures/res_rho.pdf}
+        \caption{Same as Figure \ref{fig:res_xi1}, but for
+        $\rho_c/<\rho>$. The curve for $n=1$ is mostly covered
+        by the $n=0$ curve.}
+        \label{fig:res_rho}
+    \end{centering}
+\end{figure}
+
 The step size parameter $h$ determines the resolution of our integration
 in units of $\xi$. A more sophisticated algorithm might choose a variable
 step size to improve accuracy, but we hold this parameter constant
@@ -123,32 +188,7 @@ the surface can be shown most accuratly.
 
 
 
-\begin{figure}[h]
-    \script{res_n0.py}
-    \begin{centering}
-        \includegraphics[width=0.45\textwidth]{figures/res_n0.pdf}
-        \caption{Polytropic curve for $n=0$ for various
-        values of $h$. An analytic solution is used as
-        the ground truth. Note that the residuals are highest
-        near the boundaries.}
-        \label{fig:res_n0}
-    \end{centering}
-\end{figure}
 
-\begin{figure}[h]
-    \script{res_n1.py}
-    \begin{centering}
-        \includegraphics[width=0.45\textwidth]{figures/res_n1.pdf}
-        \caption{Polytropic curve for $n=1$ for various
-        values of $h$. An analytic solution is used as
-        the ground truth. Note the local minimum at
-        $\xi\sim \pi/2$. There is an inflection point here,
-        and our numerical solution crosses the true value.
-        The location of this minimum approaches the inflection
-        point as $h$ approaches zero.}
-        \label{fig:res_n1}
-    \end{centering}
-\end{figure}
 
 We can also discuss the effects of $h$ on our measured quantities
 $\xi_1$, $\theta_n'(\xi_1)$, and $\rho_c/<\rho>$. \citet{textbook}
@@ -181,49 +221,29 @@ Regime \ref{it:init} then the solutions that are known analytically
 would also converge to some near-true value and we would see the same behavior
 for all $n$.
 
-\begin{figure}[h]
-    \script{res_xi1.py}
-    \begin{centering}
-        \includegraphics[width=0.45\textwidth]{figures/res_xi1.pdf}
-        \caption{Deviations of $\xi_1$ from the true value as a
-        function of $h$. Polytropes without analytic solutions
-        quickly converge as $h$ approaches zero, while the
-        $n=0$ and $n=1$ solutions continue to imporove indefinitely.
-        It is expected that these values would eventually
-        be limited by machine precision or \texttt{x\_init}.
-        They y-axis is defined as
-        $\Delta q = \frac{|q-q_{\rm true}|}{q_{\rm true}}$.
-        }
-        \label{fig:res_xi1}
-    \end{centering}
-\end{figure}
 
-\begin{figure}[h]
-    \script{res_theta_prime.py}
-    \begin{centering}
-        \includegraphics[width=0.45\textwidth]{figures/res_thetaprime.pdf}
-        \caption{Same as Figure \ref{fig:res_xi1}, but for
-        $\theta_n'(\xi_1)$.}
-        \label{fig:res_thetaprime}
-    \end{centering}
-\end{figure}
-
-\begin{figure}[h]
-    \script{res_rho.py}
-    \begin{centering}
-        \includegraphics[width=0.45\textwidth]{figures/res_rho.pdf}
-        \caption{Same as Figure \ref{fig:res_xi1}, but for
-        $\rho_c/<\rho>$. The curve for $n=1$ is mostly covered
-        by the $n=0$ curve.}
-        \label{fig:res_rho}
-    \end{centering}
-\end{figure}
 
 Herein we choose a value of $h = 10^{-3}$ based on Figures \ref{fig:res_xi1},
 \ref{fig:res_thetaprime}, and \ref{fig:res_rho}.
 
 \subsection{The effects of \texttt{x\_init}}
 \label{subsec:init}
+
+\begin{figure}
+    \script{xinit_xi1.py}
+    \begin{centering}
+        \includegraphics[width=0.45\textwidth]{figures/xinit_xi1.pdf}
+        \caption{Deviations of $\xi_1$ from the true value as a
+        function of \texttt{x\_init}. As expected, when \texttt{x\_init}
+        is large $\Delta \xi_1$ is a function of \texttt{x\_init},
+        and the error is independent of \texttt{x\_init} when it is small.
+        This relationship holds for arbitrary $n$, confirming that
+        for small $h$ and small \texttt{x\_init} the numerical
+        error we measure is dominated by the true value's uncertainty.}
+        \label{fig:xinit_xi1}
+    \end{centering}
+\end{figure}
+
 Let us quickly examine the effects of our lower boundary on our
 numerical results. Figure \ref{fig:xinit_xi1} shows the
 deviations of $\xi_1$ similar to Figure \ref{fig:res_xi1},
@@ -240,47 +260,14 @@ is less than $\sim 10^{-2}$. However, unlike $h$, we can choose arbitrarily
 small \texttt{x\_init} without sacrificing computational
 resources, so we will continue with the value $10^{-20}$.
 
-\begin{figure}[h]
-    \script{xinit_xi1.py}
-    \begin{centering}
-        \includegraphics[width=0.45\textwidth]{figures/xinit_xi1.pdf}
-        \caption{Deviations of $\xi_1$ from the true value as a
-        function of \texttt{x\_init}. As expected, when \texttt{x\_init}
-        is large $\Delta \xi_1$ is a function of \texttt{x\_init},
-        and the error is independent of \texttt{x\_init} when it is small.
-        This relationship holds for arbitrary $n$, confirming that
-        for small $h$ and small \texttt{x\_init} the numerical
-        error we measure is dominated by the true value's uncertainty.}
-        \label{fig:xinit_xi1}
-    \end{centering}
-\end{figure}
 
-\begin{figure*}[h]
-    \script{xinit_res_xi1.py}
-    \begin{centering}
-        \includegraphics[width=0.9\textwidth]{figures/xinit_res_xi1.pdf}
-        \caption{Deviations of $\xi_1$ from the true value as a function
-        of both \texttt{x\_init} and $h$. The dashed line
-        marks the curve \texttt{x\_init}$=h$.}
-        \label{fig:xinit_res_xi1}
-    \end{centering}
-\end{figure*}
 
 \section{Results}
 \label{sec:results}
 
-Now that we have an established understanding of the errors in our study
-we will look at our numerical results for arbitrary $n$. As stated in
-Section \ref{sec:res}, we choose a value of $h=10^{-3}$ and set 
-\texttt{x\_init} to $10^{-20}$. Table \ref{tab:7} gives these results
-in the style of Table 7.1 in \citet{textbook}.
-
 \variable{output/tab7.txt}
 
-Figure \ref{fig:func_of_n} shows the quantities $\xi_1$, $-\theta_n'(\xi_1)$,
-and $\rho_c/<\rho$ as continuous functions of polytropic index $n$.
-
-\begin{figure}[h]
+\begin{figure}
     \script{func_of_n.py}
     \begin{centering}
         \includegraphics[width=0.45\textwidth]{figures/func_of_n.pdf}
@@ -292,6 +279,36 @@ and $\rho_c/<\rho$ as continuous functions of polytropic index $n$.
         \label{fig:func_of_n}
     \end{centering}
 \end{figure}
+
+Now that we have an established understanding of the errors in our study
+we will look at our numerical results for arbitrary $n$. As stated in
+Section \ref{sec:res}, we choose a value of $h=10^{-3}$ and set 
+\texttt{x\_init} to $10^{-20}$. Table \ref{tab:7} gives these results
+in the style of Table 7.1 in \citet{textbook}.
+
+
+
+Figure \ref{fig:func_of_n} shows the quantities $\xi_1$, $-\theta_n'(\xi_1)$,
+and $\rho_c/<\rho$ as continuous functions of polytropic index $n$.
+
+
+\appendix
+
+\section{Additional Figures}
+\label{sec:figs}[h!]
+\begin{figure*}
+    \script{xinit_res_xi1.py}
+    \begin{centering}
+        \includegraphics[width=0.9\textwidth]{figures/xinit_res_xi1.pdf}
+        \caption{Deviations of $\xi_1$ from the true value as a function
+        of both \texttt{x\_init} and $h$. The dashed line
+        marks the curve \texttt{x\_init}$=h$.}
+        \label{fig:xinit_res_xi1}
+    \end{centering}
+\end{figure*}
+
+
+
 
 
 

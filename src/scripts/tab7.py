@@ -96,7 +96,7 @@ def line(
     return ' & '.join(entries)
 
 with open(outfile,'w',encoding='utf-8') as f:
-    f.write(r'\begin{table}[ht]'+'\n')
+    f.write(r'\begin{table}'+'\n')
     f.write(r'\centering'+'\n')
     f.write(r'\begin{tabular}{ccccccc}'+'\n')
     f.write(r'\hline'+'\n')
