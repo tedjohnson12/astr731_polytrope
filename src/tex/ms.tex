@@ -27,8 +27,9 @@ linked at the top of the page (see \texttt{polysolver/}). It is
 also re-implemented in Rust (\texttt{rust/}). In addition to
 learning about numerical solvers and polytropes, this project
 allowed me to experiment with Rust-Python bindings and with
-\showyourwork, which makes it possible for this document (and
-all the source code associated with it) to be open source and completely
+\showyourwork \citep{Luger2021}, which makes it possible for
+this document (and all the source code associated
+with it) to be open-source and completely
 reproducible.
 
 Following \citet{textbook} we will focus on the profile $\theta_n(\xi)$
@@ -268,7 +269,31 @@ resources, so we will continue with the value $10^{-20}$.
 \section{Results}
 \label{sec:results}
 
+Now that we have an established understanding of the errors in our study
+we will look at our numerical results for arbitrary $n$. As stated in
+Section \ref{sec:res}, we choose a value of $h=10^{-3}$ and set 
+\texttt{x\_init} to $10^{-20}$. Table \ref{tab:7} gives these results
+in the style of Table 7.1 in \citet{textbook}.
+
 \variable{output/tab7.txt}
+
+Figure \ref{fig:func_of_n} shows the quantities $\xi_1$, $-\theta_n'(\xi_1)$,
+and $\rho_c/<\rho$ as continuous functions of polytropic index $n$.
+
+\begin{figure}[h]
+    \script{func_of_n.py}
+    \begin{centering}
+        \includegraphics[width=0.45\textwidth]{figures/func_of_n.pdf}
+        \caption{Quantities $\xi_1$, $-\theta_n'(\xi_1)$,
+        and $\rho_c/<\rho$ as a function of polytropic index $n$.
+        As $n$ increases our solution flattens out near the surface.
+        The radius, however, does not increase by very much, so
+        we see a concentration of material neart the core.}
+        \label{fig:func_of_n}
+    \end{centering}
+\end{figure}
+
+
 
 
 
