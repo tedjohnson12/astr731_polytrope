@@ -39,9 +39,8 @@ density in units of the bulk density $\rho_c/<\rho>$.
 
 Section \ref{sec:methods} describes the code and it's outputs,
 Section \ref{sec:res} examines the effects of numerical resolution
-on the results, ...
-
-%describe sections
+on the results, and Section \ref{sec:results} describes the characteristics
+of polytropic solutions as a function of polytropic index.
 
 \section{Methods}
 \label{sec:methods}
@@ -186,10 +185,6 @@ values of $h$. The curve shown is a resampled solution from
 The resampling is done so that the value of $\theta_n$ at
 the surface can be shown most accuratly.
 
-
-
-
-
 We can also discuss the effects of $h$ on our measured quantities
 $\xi_1$, $\theta_n'(\xi_1)$, and $\rho_c/<\rho>$. \citet{textbook}
 gives values for these quantities for $n=0,1,1.5,2,3,4$ in Table 7.1.
@@ -220,8 +215,6 @@ of the true value (i.e. Regime \ref{it:prec}). If it were the case of
 Regime \ref{it:init} then the solutions that are known analytically
 would also converge to some near-true value and we would see the same behavior
 for all $n$.
-
-
 
 Herein we choose a value of $h = 10^{-3}$ based on Figures \ref{fig:res_xi1},
 \ref{fig:res_thetaprime}, and \ref{fig:res_rho}.
@@ -260,8 +253,6 @@ is less than $\sim 10^{-2}$. However, unlike $h$, we can choose arbitrarily
 small \texttt{x\_init} without sacrificing computational
 resources, so we will continue with the value $10^{-20}$.
 
-
-
 \section{Results}
 \label{sec:results}
 
@@ -280,16 +271,35 @@ resources, so we will continue with the value $10^{-20}$.
     \end{centering}
 \end{figure}
 
+\begin{figure}
+    \script{profs.py}
+    \begin{centering}
+        \includegraphics[width=0.45\textwidth]{figures/profs.pdf}
+        \caption{Pressure profile as a function of polytropic index $n$.
+        The x axis is normalized to the star's radius while the central
+        pressure has been calcualted assuming the star has the mass
+        and radius of the sun.}
+        \label{fig:prof}
+    \end{centering}
+\end{figure}
+
 Now that we have an established understanding of the errors in our study
 we will look at our numerical results for arbitrary $n$. As stated in
 Section \ref{sec:res}, we choose a value of $h=10^{-3}$ and set 
 \texttt{x\_init} to $10^{-20}$. Table \ref{tab:7} gives these results
 in the style of Table 7.1 in \citet{textbook}.
 
-
-
 Figure \ref{fig:func_of_n} shows the quantities $\xi_1$, $-\theta_n'(\xi_1)$,
-and $\rho_c/<\rho$ as continuous functions of polytropic index $n$.
+and $\rho_c/<\rho$ as continuous functions of polytropic index $n$. Figure 
+\ref{fig:prof} shows the pressure profile as a function of
+polytropic index $n$. These
+two figures clearly demonstrate that polytropic index is analogous to
+the degree to which a star is centrally condensed.
+
+Figure \ref{fig:prof} shows that for models with near-constant density
+(i.e. low $n$) that pressure changes very little until very near to the surface.
+The centrally condensed models, however, have a very steep pressure profile
+because less pressure is needed to support the diffuse outer layers.
 
 
 \appendix

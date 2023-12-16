@@ -44,11 +44,13 @@ for n,c in zip(NS,colors):
     xi1 = star.xi1
     xnew = np.linspace(X_INIT, xi1, N_RESAMPLE)
     ynew = star.resample_y(xnew)
-    pressure = ynew**(1+n)
+    pcen = star.central_pressure(mass=1, radius=1)
+    pressure = ynew**(1+n)*pcen
     ax.plot(xnew/xi1, pressure, label=f'n={n:.2f}',c=c,alpha=ALPHA)
 
 ax.set_xlabel('$r/R$')
-ax.set_ylabel(r'$P/P_c$')
+ax.set_ylabel('Pressure (dyne cm$^{-2}$)')
+ax.set_yscale('log')
 
 fig.colorbar(mappable, ax=ax, label='n')
 

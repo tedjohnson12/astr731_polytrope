@@ -346,3 +346,27 @@ class Star:
         """
         interp = CubicSpline(self.x,self.y)
         return interp(x)
+    def central_pressure(
+        self,
+        mass:float,
+        radius:float
+    ):
+        """
+        Get the central pressure in
+        dyne cm-2
+        
+        Parameters
+        ----------
+        mass : float
+            The mass of the star in solar masses.
+        radius : float
+            The radius of the star in solar radii.
+        
+        Returns
+        -------
+        float
+            The central pressure in dyne cm-2.
+        """
+        num = 8.952e14
+        den = (self.n+1)*self.theta_prime**2
+        return num/den * mass**2 * radius**-4
